@@ -1,0 +1,7 @@
+name: EasyTrust
+author: RoboMWM
+version: ${project.version}
+main: to.us.techfort.EasyTrust.EasyTrust
+depend: [GriefPrevention]
+commands:
+    easytrust: {}
