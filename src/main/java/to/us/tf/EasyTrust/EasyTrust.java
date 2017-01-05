@@ -82,6 +82,10 @@ public class EasyTrust extends JavaPlugin {
         }
 
         //Load data into plugin memory
+
+        if (PlayersWithAListSection.getKeys(false) == null)
+            return; //nothing to load
+
         for (String uuid : PlayersWithAListSection.getKeys(false))
         {
             Set<String> UUIDsOnTheList = new LinkedHashSet<>();
