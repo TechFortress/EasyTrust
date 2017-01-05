@@ -38,7 +38,7 @@ public class EasyTrust extends JavaPlugin {
     final String failedAdd = ChatColor.RED + " could not be added to your EasyTrust list. Either the name is not valid, or the player has not logged in recently.";
     final String EasyTrustClaimHelp = ChatColor.GOLD + "/easytrust claim " + ChatColor.YELLOW + ChatColor.ITALIC + "trustlevel" +
             ChatColor.RESET + " - Trusts everyone in your EasyTrust list with the specified trust level to your claim (or all your claims, if standing outside them).\n" +
-            "Trust levels: trust, containertrust, accesstrust, permissiontrust";
+            ChatColor.YELLOW + "Trust levels: trust, containertrust, accesstrust, permissiontrust";
     final String EasyTrustHelp = ChatColor.translateAlternateColorCodes('&',
             "&6/easytrust list &r- Lists players in your EasyTrust list\n" +
                     "&6/easytrust claim &r- Trusts players on your list to your claim.\n" +
@@ -62,7 +62,6 @@ public class EasyTrust extends JavaPlugin {
             try
             {
                 storageFile.createNewFile();
-                storage = YamlConfiguration.loadConfiguration(storageFile);
             }
             catch (IOException e)
             {
@@ -72,13 +71,13 @@ public class EasyTrust extends JavaPlugin {
                 return;
             }
         }
-        else
-            storage = YamlConfiguration.loadConfiguration(storageFile);
+
+        storage = YamlConfiguration.loadConfiguration(storageFile);
 
         ConfigurationSection PlayersWithAListSection = storage.getConfigurationSection("PlayersWithAList");
         if (PlayersWithAListSection == null) //Create section if it doesn't exist
         {
-            storage.set("PlayersWithAList", new LinkedHashMap<String, Set<String>>());
+            storage.set("PlayersWithAList", new LinkedHashMap<String, String>());
             PlayersWithAListSection = storage.getConfigurationSection("PlayersWithAList");
         }
 
@@ -304,7 +303,7 @@ public class EasyTrust extends JavaPlugin {
             if (easyTrustList == null)
                 player.sendMessage(EmptyList);
             else
-                player.sendMessage(easyTrustList);
+                player.sendMessage("Your EasyTrust list: " + easyTrustList);
             return true;
         }
 
@@ -314,10 +313,8 @@ public class EasyTrust extends JavaPlugin {
         if (command.equalsIgnoreCase("claim"))
         {
             if (args.length < 2 || !trustPlayers(player, args[1]))
-            {
                 player.sendMessage(EasyTrustClaimHelp);
-                return true;
-            }
+            return true;
         }
 
 
