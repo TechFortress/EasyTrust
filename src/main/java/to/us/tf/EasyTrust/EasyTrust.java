@@ -52,7 +52,7 @@ public class EasyTrust extends JavaPlugin {
     {
         saveConfig(); //Creates data folder for me if none exists
 
-
+        gp = (GriefPrevention)getServer().getPluginManager().getPlugin("GriefPrevention");
         //I use .data extension cuz reasons that have to do with how I automatically manage .yml files on my server so yea...
         //Not like they're supposed to touch this file anyways.
         File storageFile = new File(getDataFolder(), "storage.data");
