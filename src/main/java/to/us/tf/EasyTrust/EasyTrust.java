@@ -19,6 +19,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -47,7 +48,7 @@ public class EasyTrust extends JavaPlugin {
 
 
     YamlConfiguration storage;
-    LinkedHashMap<String, Set<String>> PlayersWithAList = new LinkedHashMap<>();
+    LinkedHashMap<String, List<String>> PlayersWithAList = new LinkedHashMap<>();
 
     public void onEnable()
     {
@@ -88,7 +89,7 @@ public class EasyTrust extends JavaPlugin {
             Set<String> UUIDsOnTheList = new LinkedHashSet<>();
             for (String UUIDOnList : PlayersWithAListSection.getStringList(uuid))
                 UUIDsOnTheList.add(UUIDOnList);
-            PlayersWithAList.put(uuid, UUIDsOnTheList);
+            PlayersWithAList.put(uuid, new LinkedList<>(UUIDsOnTheList));
         }
     }
 
@@ -118,12 +119,13 @@ public class EasyTrust extends JavaPlugin {
     {
         //If player already has a EasyTrust list, just add to this list.
         if (PlayersWithAList.containsKey(playerUUID))
-            PlayersWithAList.get(playerUUID).add(targetUUID);
+            if (!PlayersWithAList.get(playerUUID).contains(targetUUID)) //Because I'm using a list instead of a set now...
+                PlayersWithAList.get(playerUUID).add(targetUUID);
 
         //Otherwise, if never used a list before, create it
         else
         {
-            Set<String> UUIDsOnTheList = new LinkedHashSet<>();
+            List<String> UUIDsOnTheList = new LinkedList<>();
             UUIDsOnTheList.add(targetUUID);
             PlayersWithAList.put(playerUUID, UUIDsOnTheList);
         }
@@ -149,7 +151,7 @@ public class EasyTrust extends JavaPlugin {
     {
         if (!PlayersWithAList.containsKey(playerUUID))
             return null;
-        Set<String> uuids = PlayersWithAList.get(playerUUID);
+        List<String> uuids = PlayersWithAList.get(playerUUID);
         Set<String> names = new LinkedHashSet<>();
         boolean cleanup = false;
 
@@ -238,7 +240,7 @@ public class EasyTrust extends JavaPlugin {
             {
                 if (!PlayersWithAList.containsKey(playerUUID))
                     return;
-                Set<String> newUUIDList = new LinkedHashSet<>();
+                List<String> newUUIDList = new LinkedList<>();
                 for (String uuidString : PlayersWithAList.get(playerUUID))
                 {
                     OfflinePlayer offlinePlayer = getServer().getOfflinePlayer(UUID.fromString(uuidString));
