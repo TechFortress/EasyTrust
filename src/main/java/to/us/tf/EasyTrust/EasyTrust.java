@@ -78,7 +78,6 @@ public class EasyTrust extends JavaPlugin {
         ConfigurationSection PlayersWithAListSection = storage.getConfigurationSection("PlayersWithAList");
         if (PlayersWithAListSection == null) //Create section if it doesn't exist
         {
-            storage.set("PlayersWithAList", new LinkedHashMap<String, String>());
             return; //nothing to load
         }
 
@@ -129,8 +128,6 @@ public class EasyTrust extends JavaPlugin {
             List<String> UUIDsOnTheList = new LinkedList<>();
             UUIDsOnTheList.add(targetUUID);
             PlayersWithAList.put(playerUUID, UUIDsOnTheList);
-            getLogger().info("Added " + UUIDsOnTheList + " to " + playerUUID);
-            getLogger().info(String.valueOf(PlayersWithAList.containsKey(playerUUID)));
         }
         saveData();
     }
