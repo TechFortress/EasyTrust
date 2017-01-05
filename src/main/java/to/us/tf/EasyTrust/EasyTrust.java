@@ -78,13 +78,10 @@ public class EasyTrust extends JavaPlugin {
         if (PlayersWithAListSection == null) //Create section if it doesn't exist
         {
             storage.set("PlayersWithAList", new LinkedHashMap<String, String>());
-            PlayersWithAListSection = storage.getConfigurationSection("PlayersWithAList");
+            return; //nothing to load
         }
 
         //Load data into plugin memory
-
-        if (PlayersWithAListSection.getKeys(false) == null)
-            return; //nothing to load
 
         for (String uuid : PlayersWithAListSection.getKeys(false))
         {
