@@ -188,8 +188,8 @@ public class EasyTrust extends JavaPlugin {
         StringBuilder formattedNames = new StringBuilder();
         for (String name : names)
         {
-            formattedNames.append(name);
             formattedNames.append(", ");
+            formattedNames.append(name);
         }
         formattedNames.delete(0, 2);
         return formattedNames.toString();
