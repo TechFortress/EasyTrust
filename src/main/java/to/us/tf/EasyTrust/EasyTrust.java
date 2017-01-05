@@ -119,15 +119,18 @@ public class EasyTrust extends JavaPlugin {
     {
         //If player already has a EasyTrust list, just add to this list.
         if (PlayersWithAList.containsKey(playerUUID))
+        {
             if (!PlayersWithAList.get(playerUUID).contains(targetUUID)) //Because I'm using a list instead of a set now...
                 PlayersWithAList.get(playerUUID).add(targetUUID);
-
+        }
         //Otherwise, if never used a list before, create it
         else
         {
             List<String> UUIDsOnTheList = new LinkedList<>();
             UUIDsOnTheList.add(targetUUID);
             PlayersWithAList.put(playerUUID, UUIDsOnTheList);
+            getLogger().info("Added " + UUIDsOnTheList + " to " + playerUUID);
+            getLogger().info(String.valueOf(PlayersWithAList.containsKey(playerUUID)));
         }
         saveData();
     }
