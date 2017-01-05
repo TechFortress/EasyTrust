@@ -36,8 +36,9 @@ public class EasyTrust extends JavaPlugin {
     final String successfulRemove = ChatColor.GREEN + " was removed from your EasyTrust list.";
     final String failedRemove = ChatColor.RED + " could not be removed from your EasyTrust list. Either the name is not valid, or the player has not logged in recently.";
     final String failedAdd = ChatColor.RED + " could not be added to your EasyTrust list. Either the name is not valid, or the player has not logged in recently.";
-    final String EasyTrustClaimHelp = ChatColor.GOLD + "/easytrust claim " + ChatColor.YELLOW + ChatColor.ITALIC + "trust/containertrust/accesstrust/permissiontrust" +
-            ChatColor.RESET + " - Trusts everyone in your EasyTrust list with the specified trust level to your claim (or all your claims, if standing outside them.)";
+    final String EasyTrustClaimHelp = ChatColor.GOLD + "/easytrust claim " + ChatColor.YELLOW + ChatColor.ITALIC + "trustlevel" +
+            ChatColor.RESET + " - Trusts everyone in your EasyTrust list with the specified trust level to your claim (or all your claims, if standing outside them).\n" +
+            "Trust levels: trust, containertrust, accesstrust, permissiontrust";
     final String EasyTrustHelp = ChatColor.translateAlternateColorCodes('&',
             "&6/easytrust list &r- Lists players in your EasyTrust list\n" +
                     "&6/easytrust claim &r- Trusts players on your list to your claim.\n" +
@@ -266,7 +267,7 @@ public class EasyTrust extends JavaPlugin {
             return false;
         for (String targetName : targetPlayers)
         {
-            boolean success = player.performCommand("/" + trustCommand + " " + targetName);
+            boolean success = player.performCommand(trustCommand + " " + targetName);
             if (!success)
                 return false;
         }
@@ -315,7 +316,7 @@ public class EasyTrust extends JavaPlugin {
             if (args.length < 2 || !trustPlayers(player, args[1]))
             {
                 player.sendMessage(EasyTrustClaimHelp);
-                return false;
+                return true;
             }
         }
 
